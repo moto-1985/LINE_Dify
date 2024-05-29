@@ -1,0 +1,232 @@
+app:
+  description: LINE_Dify2
+  icon: "\U0001F916"
+  icon_background: "#FFEAD5"
+  mode: workflow
+  name: LINE_Dify2
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+          - local_file
+          - remote_url
+    opening_statement: ""
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ""
+      voice: ""
+  graph:
+    edges:
+      - data:
+          isInIteration: false
+          sourceType: start
+          targetType: tool
+        id: 1716969885617-source-1716969956399-target
+        source: "1716969885617"
+        sourceHandle: source
+        target: "1716969956399"
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: tool
+          targetType: tool
+        id: 1716969956399-source-1716970137692-target
+        source: "1716969956399"
+        sourceHandle: source
+        target: "1716970137692"
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: tool
+          targetType: llm
+        id: 1716970137692-source-1716970564154-target
+        source: "1716970137692"
+        sourceHandle: source
+        target: "1716970564154"
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: llm
+          targetType: end
+        id: 1716970564154-source-1716970776580-target
+        source: "1716970564154"
+        sourceHandle: source
+        target: "1716970776580"
+        targetHandle: target
+        type: custom
+        zIndex: 0
+    nodes:
+      - data:
+          desc: ""
+          selected: false
+          title: "\u958B\u59CB"
+          type: start
+          variables:
+            - label: query
+              max_length: 48
+              options: []
+              required: true
+              type: paragraph
+              variable: query
+        height: 89
+        id: "1716969885617"
+        position:
+          x: 80
+          y: 282
+        positionAbsolute:
+          x: 80
+          y: 282
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          desc: ""
+          provider_id: time
+          provider_name: time
+          provider_type: builtin
+          selected: false
+          title: Current Time
+          tool_configurations:
+            format: "%Y-%m-%d %H:%M:%S"
+            timezone: Asia/Tokyo
+          tool_label: Current Time
+          tool_name: current_time
+          tool_parameters: {}
+          type: tool
+        height: 115
+        id: "1716969956399"
+        position:
+          x: 384
+          y: 282
+        positionAbsolute:
+          x: 384
+          y: 282
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          desc: ""
+          provider_id: tavily
+          provider_name: tavily
+          provider_type: builtin
+          selected: false
+          title: TavilySearch
+          tool_configurations:
+            exclude_domains: null
+            include_answer: 0
+            include_domains: null
+            include_images: 0
+            include_raw_content: 0
+            max_results: 5
+            search_depth: basic
+          tool_label: TavilySearch
+          tool_name: tavily_search
+          tool_parameters:
+            query:
+              type: mixed
+              value: "{{#1716969885617.query#}} {{#1716969956399.text#}}"
+          type: tool
+        height: 245
+        id: "1716970137692"
+        position:
+          x: 688
+          y: 282
+        positionAbsolute:
+          x: 688
+          y: 282
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          context:
+            enabled: false
+            variable_selector: []
+          desc: ""
+          model:
+            completion_params: {}
+            mode: chat
+            name: claude-3-opus-20240229
+            provider: anthropic
+          prompt_template:
+            - id: 54425463-ce67-4bd5-928d-1232d475a1f4
+              role: system
+              text:
+                "\u3042\u306A\u305F\u306F\u308F\u304B\u308A\u3084\u3059\u304F\u6559\
+                \u3048\u3066\u304F\u308C\u308B\u5148\u751F\u3067\u3059"
+            - id: e3cc13bb-5e05-45a7-8667-5fd3974c2a32
+              role: user
+              text:
+                "\u4E0B\u8A18\u306B\u3064\u3044\u3066\u308F\u304B\u308A\u3084\u3059\
+                \u304F\u89E3\u8AAC\u3057\u3066\u304F\u3060\u3055\u3044\u3002\n\u30A8\u30D3\
+                \u30C7\u30F3\u30B9\u3068\u3057\u3066URL\u306F\u6DFB\u4ED8\u3057\u3066\u304F\
+                \u3060\u3055\u3044\u3002\n{{#1716970137692.text#}}\n"
+          selected: false
+          title: LLM
+          type: llm
+          variables: []
+          vision:
+            configs:
+              detail: high
+            enabled: true
+        height: 97
+        id: "1716970564154"
+        position:
+          x: 992
+          y: 282
+        positionAbsolute:
+          x: 992
+          y: 282
+        selected: true
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          desc: ""
+          outputs:
+            - value_selector:
+                - "1716970564154"
+                - text
+              variable: text
+          selected: false
+          title: "\u7D42\u4E86"
+          type: end
+        height: 89
+        id: "1716970776580"
+        position:
+          x: 1296
+          y: 282
+        positionAbsolute:
+          x: 1296
+          y: 282
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+    viewport:
+      x: -11.39609770367315
+      y: 66.76511142303855
+      zoom: 1.0025237143666699
